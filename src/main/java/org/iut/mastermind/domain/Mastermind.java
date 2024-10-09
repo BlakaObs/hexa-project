@@ -38,11 +38,9 @@ public class Mastermind {
     // sinon on retourne le resultat du mot proposé
     public ResultatPartie evaluation(Joueur joueur, String motPropose) {
         if (partieRepository.getPartieEnregistree(joueur).isPresent()){
-            Partie p = partieRepository.getPartieEnregistree(joueur).get();
-            if(p.isTerminee())return ResultatPartie.ERROR;
+            if(isJeuEnCours(partieRepository.getPartieEnregistree(joueur)))return ResultatPartie.ERROR;
             else {
-                ResultatPartie res = calculeResultat(p, motPropose);
-                return res;
+                return calculeResultat(partieRepository.getPartieEnregistree(joueur).get(), motPropose);
             }
         }
         return ResultatPartie.ERROR;
